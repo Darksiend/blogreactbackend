@@ -21,7 +21,8 @@ app.use(morgan("dev"));
 
 mongoose
   .connect(
-    "mongodb+srv://darksiend:123@mycluster.eswzs4i.mongodb.net/blog?retryWrites=true&w=majority"
+      process.env.MONGO_DB_URL
+    // "mongodb+srv://darksiend:123@mycluster.eswzs4i.mongodb.net/blog?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("DB Ok!");
@@ -49,7 +50,7 @@ app.delete("/posts/:id", checkAuth, PostController.remove);
 
 app.patch("/posts/:id", checkAuth, PostController.update);
 
-app.listen(port, (e) => {
+app.listen(process.env.PORT || port, (e) => {
   if (e) throw e;
 
   console.log("port: ", port);
