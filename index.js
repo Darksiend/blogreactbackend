@@ -14,7 +14,7 @@ import UserModel from "./models/User.js";
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from "./controllers/userController.js";
 import * as PostController from "./controllers/PostController.js";
-const port = process.env.PORT || port;
+const port = process.env.PORT || 4444;
 const app = express();
 
 app.use(morgan("dev"));
