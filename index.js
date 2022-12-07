@@ -50,7 +50,7 @@ app.delete("/posts/:id", checkAuth, PostController.remove);
 
 app.patch("/posts/:id", checkAuth, PostController.update);
 
-app.listen(port, (e) => {
+app.listen(process.env.PORT, (e) => {
   if (e) throw e;
 
   console.log("port: ", port);
