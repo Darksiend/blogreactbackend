@@ -14,7 +14,7 @@ import UserModel from "./models/User.js";
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from "./controllers/userController.js";
 import * as PostController from "./controllers/PostController.js";
-const port = 4444;
+const port = process.env.PORT || port;
 const app = express();
 
 app.use(morgan("dev"));
@@ -50,7 +50,7 @@ app.delete("/posts/:id", checkAuth, PostController.remove);
 
 app.patch("/posts/:id", checkAuth, PostController.update);
 
-app.listen(process.env.PORT || port, (e) => {
+app.listen(port, (e) => {
   if (e) throw e;
 
   console.log("port: ", port);
