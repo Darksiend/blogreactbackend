@@ -23,7 +23,7 @@ app.use(morgan("dev"));
 mongoose
   .connect(
     // "mongodb+srv://darksiend:123@mycluster.eswzs4i.mongodb.net/blog?retryWrites=true&w=majority"
-      MONGO_DB_URL
+      process.env.MONGO_DB_URL
   )
   .then(() => {
     console.log("DB Ok!");
