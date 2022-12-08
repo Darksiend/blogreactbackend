@@ -1,5 +1,20 @@
 import PostModel from "../models/Post.js";
 
+export const getLastTags = async (req, res) => {
+  try {
+    const posts = await PostModel.find().limit(5).populate("user").exec();
+
+    const tags = posts
+      .map((post) => post.tags)
+      .flat()
+      .slice(0, 5);
+    res.json(tags);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Unsuccessful Get All Post" });
+  }
+};
+
 export const getAll = async (req, res) => {
   try {
     const posts = await PostModel.find().populate("user").exec();
@@ -35,7 +50,7 @@ export const getOne = async (req, res) => {
     const postId = req.params.id;
     PostModel.findOneAndUpdate(
       { _id: postId },
-      { $inc: { viewsCount: 1 } },
+      { $inc: { viewCount: 1 } },
       { returnDocument: "after" },
       (err, doc) => {
         if (err) {
@@ -58,9 +73,9 @@ export const create = async (req, res) => {
   try {
     const doc = new PostModel({
       title: req.body.title,
-      text: req.body.title,
+      text: req.body.text,
       imageUrl: req.body.imageUrl,
-      tags: req.body.tags,
+      tags: req.body.tags.split(" "),
       user: req.userId,
     });
 
@@ -80,7 +95,7 @@ export const update = async (req, res) => {
       { _id: postId },
       {
         title: req.body.title,
-        text: req.body.title,
+        text: req.body.text,
         imageUrl: req.body.imageUrl,
         tags: req.body.tags,
         user: req.userId,
