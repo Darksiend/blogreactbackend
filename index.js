@@ -21,10 +21,7 @@ const app = express();
 app.use(morgan("dev"));
 
 mongoose
-  .connect(
-    // "mongodb+srv://darksiend:123@mycluster.eswzs4i.mongodb.net/blog?retryWrites=true&w=majority"
-      process.env.MONGO_DB_URL
-  )
+  .connect(process.env.MONGO_DB_URL)
   .then(() => {
     console.log("DB Ok!");
   })
@@ -37,7 +34,6 @@ app.use(express.json());
 app.use(cors());
 app.post(
   "/auth/login",
-
   loginValidation,
   handleValidationErrors,
   UserController.login
